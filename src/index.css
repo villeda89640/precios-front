@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('https://ferreteriacerca.com.mx/wp-content/uploads/2023/06/mundo-tool-ferreterias-la-loma.jpeg');
+  background-size: cover;          /* Escala para cubrir todo */
+  background-position: center;     /* Centra la imagen */
+  background-repeat: no-repeat;    /* Evita repeticiones */
+  height: 100vh;
+}
