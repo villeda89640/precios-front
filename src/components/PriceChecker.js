@@ -27,7 +27,7 @@ const PriceChecker = () => {
   useEffect(() => {
     const loginSAP = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/login', {
+        const response = await fetch('http://192.168.1.162:5000/api/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -91,49 +91,58 @@ const PriceChecker = () => {
           }}
         >
           <CardContent>
-            <Typography variant="h5" gutterBottom align="center">
-              Verificador de Precios
-            </Typography>
-            <Box display="flex" flexDirection="column" gap={2}>
-              <TextField
-                label="Código del Artículo"
-                variant="outlined"
-                value={itemCode}
-                onChange={(e) => setItemCode(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-                fullWidth
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSearch}
-                disabled={loading}
-                fullWidth
-              >
-                {loading ? <CircularProgress size={24} color="inherit" /> : 'Buscar'}
-              </Button>
+  <Typography variant="h5" gutterBottom align="center">
+    Verificador de Precios
+  </Typography>
+  <Box display="flex" flexDirection="column" gap={2}>
+    <TextField
+      label="Código del Artículo"
+      variant="outlined"
+      value={itemCode}
+      onChange={(e) => setItemCode(e.target.value)}
+      onKeyDown={(e) => e.key === 'Enter' && handleSearch(e)}
+      fullWidth
+      disabled={loading}  // Deshabilita el input mientras carga
+    />
+  <Button
+  variant="contained"
+  color="primary"
+  onClick={handleSearch}
+  disabled={loading}  // Deshabilita el botón mientras carga
+  fullWidth
+>
+  {loading ? (
+  <Box display="flex" flexDirection="column" alignItems="center">
+  <CircularProgress size={50} color="primary" />
+  <Typography variant="body2" style={{ marginTop: '10px' }}>
+    Cargando...
+  </Typography>
+</Box>
+  ) : (
+    'Buscar'
+  )}
+</Button>
+    {error && (
+      <Typography color="error" align="center">
+        {error}
+      </Typography>
+    )}
 
-              {error && (
-                <Typography color="error" align="center">
-                  {error}
-                </Typography>
-              )}
-
-              {priceData && (
-                <Card elevation={1} style={{ marginTop: '20px' }}>
-                  <CardContent>
-                    <Typography variant="h6" style={{ color: 'red' }}>
-                      Precio: ${parseFloat(priceData.price).toFixed(2)}
-                    </Typography>
-                    <Typography variant="body1">Stock: {priceData.InStock} unidades</Typography>
-                    <Typography variant="body1">Código: {priceData.ItemCode}</Typography>
-                    <Typography variant="body1">Clave: {priceData.ForeignName}</Typography>
-                    <Typography variant="body1">Almacén: {priceData.WarehouseCode}</Typography>
-                  </CardContent>
-                </Card>
-              )}
-            </Box>
-          </CardContent>
+    {priceData && (
+      <Card elevation={1} style={{ marginTop: '20px' }}>
+        <CardContent>
+          <Typography variant="h6" style={{ color: 'red' }}>
+            Precio: ${parseFloat(priceData.price).toFixed(2)}
+          </Typography>
+          <Typography variant="body1">Stock: {priceData.InStock} unidades</Typography>
+          <Typography variant="body1">Código: {priceData.ItemCode}</Typography>
+          <Typography variant="body1">Clave: {priceData.ForeignName}</Typography>
+          <Typography variant="body1">Almacén: {priceData.WarehouseCode}</Typography>
+        </CardContent>
+      </Card>
+    )}
+  </Box>
+</CardContent>
         </Card>
 
         {/* Imagen del producto */}

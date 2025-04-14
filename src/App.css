@@ -1,0 +1,9 @@
+.orange-bar {
+    background-color: #ff7d03; /* Naranja */
+    height: 50px; /* Altura de la franja */
+    width: 100%; /* Abarca todo el ancho de la pantalla */
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 9999;
+  }

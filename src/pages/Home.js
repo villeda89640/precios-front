@@ -7,7 +7,7 @@ const Home = () => {
 
   return (
     <div>
-      <Header itemCode={lastItemCode} />
+     
       <PriceChecker onSearch={(code) => setLastItemCode(code)} />
     </div>
   );
