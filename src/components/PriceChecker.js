@@ -27,11 +27,12 @@ const PriceChecker = () => {
   useEffect(() => {
     const loginSAP = async () => {
       try {
-        const response = await fetch('http://192.168.1.162:5000/api/login', {
+        const response = await fetch('http://192.168.1.162:7000/api/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include' 
         });
 
         const result = await response.json();
@@ -50,21 +51,27 @@ const PriceChecker = () => {
 
   const handleSearch = async (e) => {
     e?.preventDefault();
+  
+    if (!itemCode.trim()) {
+      setError('Por favor ingresa un código de artículo');
+      return;
+    }
+  
     setLoading(true);
     setError(null);
     setPriceData(null);
-    setItemCode('');
     try {
-      const data = await getItemPrice(itemCode);
+      const data = await getItemPrice(itemCode.trim());
       setPriceData(data);
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
+  
     setItemCode('');
   };
-
+  
   const handleImageClick = (imageSrc) => {
     setLargeImage(imageSrc);
     setOpenModal(true);
@@ -135,7 +142,10 @@ const PriceChecker = () => {
             Precio: ${parseFloat(priceData.price).toFixed(2)}
           </Typography>
           <Typography variant="body1">Stock: {priceData.InStock} unidades</Typography>
-          <Typography variant="body1">Código: {priceData.ItemCode}</Typography>
+          <Typography variant="body1" sx={{ fontWeight: 'bold' }}>
+  Código: {priceData.ItemCode}
+</Typography>
+
           <Typography variant="body1">Clave: {priceData.ForeignName}</Typography>
           <Typography variant="body1">Almacén: {priceData.WarehouseCode}</Typography>
         </CardContent>

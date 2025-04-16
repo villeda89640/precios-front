@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.162:5000/api'; // Usamos variable de entorno
+const API_URL = 'http://192.168.1.162:7000/api'; // Usamos variable de entorno
 
 
 
@@ -18,6 +18,7 @@ export const login = async () => {
     );
     return response.data;
   } catch (error) {
+    console.error(error);
     throw new Error('Error al realizar login');
   }
 };
@@ -31,6 +32,7 @@ export const getItemPrice = async (itemCode) => {
     );
     return response.data;
   } catch (error) {
+    console.error(error);
     throw new Error('Error al obtener el precio');
   }
 };
